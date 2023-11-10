@@ -1,61 +1,100 @@
 const express = require("express");
 const app = express();
+const pool = require("./DBConfig");
+const Router = require("express");
+const cors = require("cors");
+const bodyParser = require("body-parser");
+const router = require("./route");
+const path = require("path");
+const { editTodo, createTodo, getTodos } = require("./controller");
+const dotenv = require("dotenv");
+dotenv.config();
 const port = process.env.PORT || 3001;
 
-app.get("/", (req, res) => res.type('html').send(html));
+// const client = new Client({
+//   database: process.env.DATABASE_NAME,
+//   user: process.env.DATABASE_USER,
+//   host: process.env.DATABASE_HOST,
+//   password: process.env.DATABASE_PASSWORD,
+//   port: process.env.DATABASE_PORT,
+// });
 
-const server = app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+pool.connect(function (err) {
+  if (err) throw err;
+  console.log("Connected!");
+});
+
+pool.on("connect", () => {
+  console.log("connected to the db");
+});
+
+app.use(express.static(path.join(__dirname, "public")));
+app.use(bodyParser.raw({ type: "application/vnd.custom-type" }));
+app.use(bodyParser.text({ type: "text/html" }));
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  })
+);
+
+app.use("/", router);
+
+app.get("/", (req, res) => res.type("html").send(html));
+app.get("/", (req, res, next) => {
+  getTodos(req, res, client);
+});
+app.post("/", (req, res, client) => {
+  createTodo(req, res, pool);
+});
+app.delete("/", (req, res) => {
+  console.log("Delete request called", req);
+});
+app.put("/", editTodo);
+
+const server = app.listen(port, () =>
+  console.log(`Example app listening on port ${port}!`)
+);
 
 server.keepAliveTimeout = 120 * 1000;
 server.headersTimeout = 120 * 1000;
 
 const html = `
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <title>Hello from Render!</title>
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
-    <script>
-      setTimeout(() => {
-        confetti({
-          particleCount: 100,
-          spread: 70,
-          origin: { y: 0.6 },
-          disableForReducedMotion: true
-        });
-      }, 500);
-    </script>
-    <style>
-      @import url("https://p.typekit.net/p.css?s=1&k=vnd5zic&ht=tk&f=39475.39476.39477.39478.39479.39480.39481.39482&a=18673890&app=typekit&e=css");
-      @font-face {
-        font-family: "neo-sans";
-        src: url("https://use.typekit.net/af/00ac0a/00000000000000003b9b2033/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3") format("woff2"), url("https://use.typekit.net/af/00ac0a/00000000000000003b9b2033/27/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3") format("woff"), url("https://use.typekit.net/af/00ac0a/00000000000000003b9b2033/27/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3") format("opentype");
-        font-style: normal;
-        font-weight: 700;
-      }
-      html {
-        font-family: neo-sans;
-        font-weight: 700;
-        font-size: calc(62rem / 16);
-      }
-      body {
-        background: white;
-      }
-      section {
-        border-radius: 1em;
-        padding: 1em;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        margin-right: -50%;
-        transform: translate(-50%, -50%);
-      }
-    </style>
+    <meta charset="UTF-8">
+    <meta charset="x-Adobe-Zapf-Dingbats-Encoding">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>Todo List</title>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
   </head>
-  <body>
-    <section>
-      Hello from Render!
-    </section>
-  </body>
+  <body id="body">
+    <div class="container" id="container">
+        <h1 class="title">TODO</h1>
+        <div class="createTodoContainer">
+            <form id="createForm">
+                <div class="createTodoDiv">
+                    <div class="columnLeft">
+                        Add a Todo
+                    </div>
+                    <input id="createInput" type="text" name="title" value="" placeholder="Enter your Todo"/>
+                    <div class="columnRight">
+                        <button type="submit" id="createButton"></button>
+                    </div>
+                </div>
+                </form>
+            </form>
+        </div>
+        <div class="listContainer">
+            <ul class="todoList" id="todoList">
+            </ul>
+        </div>
+    </div>
+	<script src="/javascript/App.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    </body>
 </html>
-`
+`;

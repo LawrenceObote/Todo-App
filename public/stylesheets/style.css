@@ -1,0 +1,256 @@
+.title {
+  width: 40%;
+  color: hsl(235, 21%, 11%);
+}
+
+#container {
+  width: 40%;
+  max-width: 600px;
+}
+
+#createForm {
+  width: 100%;
+  border-radius: 5px;
+}
+
+.createTodoContainer {
+  border-radius: 5px;
+  margin: auto;
+  width: 100%;
+  padding-bottom: 10px;
+  color: hsl(234, 39%, 85%);
+  text-align: center;
+  /* max-width: 540px; */
+}
+
+.createTodoDiv {
+  border-radius: 5px;
+  display: flex;
+  flex-direction: row;
+  height: 70px;
+  line-height: 70px;
+  padding-bottom: 20px;
+  padding-right: 0px;
+  background-color: hsl(235, 21%, 11%);
+  width: 100%;
+}
+
+#createInput {
+  border-radius: 5px;
+  border: 1px hsl(234, 39%, 85%) solid;
+  height: 35px;
+  width: 70%;
+  background-color: hsl(235, 21%, 11%);
+  color: hsl(234, 39%, 85%);
+  text-align: center;
+  margin-top: 15px;
+}
+
+.container {
+  width: 100%;
+}
+
+.columnLeft {
+  width: 20%;
+  padding: 0px;
+  text-align: left;
+}
+
+.columnRight {
+  width: 5%;
+  padding: 0px;
+  margin: 0px;
+}
+
+.listContainer {
+  border-radius: 5px;
+  margin: 0 auto;
+  padding: 0px;
+  width: 100%;
+  background-color: hsl(235, 21%, 11%);
+  color: hsl(234, 39%, 85%);
+  text-align: center;
+}
+
+ul {
+  display: inline-block;
+  text-align: left;
+  width: 100%;
+  padding: 0px;
+  margin: 0px;
+}
+
+li {
+  display: flex;
+  flex-direction: row;
+  list-style-type: none;
+  height: 50px;
+  border-bottom: solid 1px hsl(234, 39%, 85%);
+  border-left: none;
+  border-right: none;
+  width: 100%;
+  padding-left: 20px;
+}
+
+.popupContainer {
+  position: absolute;
+  width: 0%;
+  height: 0%;
+  left: 50%;
+}
+
+.popupWrapper {
+  position: fixed;
+  display: flex;
+  flex-direction: row;
+  height: 50px;
+  left: 50%;
+  top: 50%;
+  width: 40%;
+  -ms-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  background-color: hsl(235, 21%, 11%);
+  border: 2px hsl(234, 39%, 85%) solid;
+  border-radius: 5px;
+  opacity: 1;
+}
+
+.popupInput {
+  background-color: hsl(234, 39%, 85%);
+  margin: auto;
+  width: 60%;
+  opacity: 1;
+  color: hsl(234, 39%, 85%);
+}
+
+.hide {
+  visibility: hidden;
+}
+
+.popup .popuptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+  width: 160px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 8px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -80px;
+}
+
+.popup .show {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -50px;
+  margin-left: -50px;
+  width: 100px;
+  height: 100px;
+  background-color: hsl(235, 21%, 11%);
+  -webkit-animation: fadeIn 1s;
+  animation: fadeIn 1s;
+  background-color: hsl(235, 21%, 11%);
+}
+
+.editButtonDiv {
+  width: 8%;
+}
+
+.editButton {
+  display: block;
+  height: 15px;
+  width: 15px;
+  margin-top: 5px;
+  border: none;
+  right: 30px;
+  background-color: hsl(235, 21%, 11%);
+}
+
+.editPencil {
+  margin-top: 10px;
+  right: 30px;
+  font-size: 20px;
+  background-image: linear-gradient(
+    to bottom right,
+    hsl(192, 100%, 67%),
+    hsl(280, 87%, 65%)
+  );
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  margin-top: 18px;
+  text-align: center;
+}
+
+.deleteButtonDiv {
+  border: none;
+  right: 30px;
+  margin-left: 5px;
+  width: 8%;
+}
+
+.deleteButton {
+  background-image: linear-gradient(
+    to bottom right,
+    hsl(192, 100%, 67%),
+    hsl(280, 87%, 65%)
+  );
+  border-radius: 50%;
+  border: none;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  margin-top: 18px;
+  color: hsl(234, 39%, 85%);
+  font-size: 20px;
+}
+
+.completedDiv {
+  padding-right: 10px;
+  margin: 0;
+  top: 20%;
+  background-color: hsl(235, 21%, 11%);
+}
+
+.completedCheck {
+  background-image: linear-gradient(
+    to bottom right,
+    hsl(192, 100%, 67%),
+    hsl(280, 87%, 65%)
+  );
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  margin-top: 18px;
+  text-align: center;
+}
+
+.todoTextDiv {
+  width: 80%;
+  padding-left: 10px;
+  bottom: 20%;
+}
+
+.todoText {
+}
+
+.close:checked {
+  color: red;
+  text-decoration: none;
+  cursor: pointer;
+}
