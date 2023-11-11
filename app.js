@@ -41,7 +41,9 @@ app.post("/", (req, res) => {
 app.delete("/", (req, res) => {
   deleteTodo(req, res);
 });
-app.put("/", editTodo);
+app.put("/", (req, res) => {
+  editTodo(req, res);
+});
 
 const server = app.listen(port, () =>
   console.log(`Example app listening on port ${port}!`)

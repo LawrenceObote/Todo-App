@@ -39,23 +39,23 @@ const deleteTodo = async (id, li) => {
   }
 };
 
-const upsertTodo = async (id, title) => {
-  const url = `https://todo-list-wde5.onrender.com/`;
-  console.log("here is the title", title);
-  const response = await fetch(url, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      title: title,
-      id: id,
-    }),
-  });
-  if (!response.ok) {
-    throw new Error(`HTTP error: status: ${response.status}`);
-  }
-};
+// const upsertTodo = async (id, title) => {
+//   const url = `http://localhost:3001/`;
+//   console.log("here is the title", title);
+//   const response = await fetch(url, {
+//     method: "PUT",
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify({
+//       title: title,
+//       id: id,
+//     }),
+//   });
+//   if (!response.ok) {
+//     throw new Error(`HTTP error: status: ${response.status}`);
+//   }
+// };
 
 const setCompleted = async (todo) => {
   const url = `https://todo-list-wde5.onrender.com`;
@@ -76,28 +76,22 @@ const setCompleted = async (todo) => {
 };
 
 const editTodos = async (id, title) => {
-  const url = `https://todo-list-wde5.onrender.com/`;
   let headers;
+  let url;
 
   if (title) {
+    url = `http://localhost:3001/?id=${id}&title=${title}`;
     headers = {
       method: "PUT",
-      mode: "cors",
-      headers: {
-        "Content-Type": "application/json",
-      },
       body: JSON.stringify({
         id: id,
         title: title,
       }),
     };
   } else {
+    url = `http://localhost:3001/?id=${id}`;
     headers = {
       method: "PUT",
-      mode: "cors",
-      headers: {
-        "Content-Type": "application/json",
-      },
       body: JSON.stringify({
         id: id,
       }),

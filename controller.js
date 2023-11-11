@@ -113,11 +113,12 @@ const setCompleted = async (id) => {
 };
 
 const editTodo = async (req, res) => {
-  if (req.body.title) {
-    await upsertTodos(req.body.id, req.body.title);
+  console.log(req.query.title, req.query.title);
+  if (req.query.title) {
+    await upsertTodos(req.query.id, req.query.title);
     return;
   }
-  await setCompleted(req.body.id);
+  await setCompleted(req.query.id);
 };
 
 module.exports = {
