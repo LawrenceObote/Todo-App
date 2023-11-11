@@ -1,22 +1,22 @@
-const express = require("express");
-const router = express.Router();
+// const express = require("express");
+// const router = express.Router();
 
-const {
-  createTodo,
-  getTodoById,
-  editTodo,
-  deleteTodo,
-  getTodos,
-} = require("./controller");
+// const {
+//   createTodo,
+//   getTodoById,
+//   editTodo,
+//   deleteTodo,
+//   getTodos,
+// } = require("./controller");
 
-router.use((req, res, next) => {
-  next();
-});
+// router.use((req, res, next) => {
+//   next();
+// });
 
-router.post("/", createTodo);
-router.get("/", getTodos);
-router.get("/:id", getTodoById);
-router.put("/", editTodo);
-router.delete("/", deleteTodo);
+// router.post("/", createTodo);
+// router.get("/", getTodos(req, ));
+// router.get("/:id", getTodoById);
+// router.put("/", editTodo);
+// router.delete("/", deleteTodo);
 
-module.exports = router;
+// module.exports = router;

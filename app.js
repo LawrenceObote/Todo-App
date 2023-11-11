@@ -26,25 +26,17 @@ pool.connect(function (err) {
 
 pool.on("connect", () => {
   console.log("connected to the db");
+  console.log(path.join(__dirname, "public"));
 });
 
 app.use(express.static(path.join(__dirname, "public")));
-app.use(bodyParser.raw({ type: "application/vnd.custom-type" }));
-app.use(bodyParser.text({ type: "text/html" }));
-app.use(
-  bodyParser.urlencoded({
-    extended: true,
-  })
-);
 
-app.use("/", router);
-
-app.get("/", (req, res) => res.type("html").send(html));
-app.get("/", (req, res, next) => {
-  getTodos(req, res, client);
+// app.use("/", router);
+app.get("/todo_list", async (req, res) => {
+  getTodos(req, res, pool);
 });
-app.post("/", (req, res, client) => {
-  createTodo(req, res, pool);
+app.post("/", (req, res) => {
+  createTodo(req, res);
 });
 app.delete("/", (req, res) => {
   console.log("Delete request called", req);

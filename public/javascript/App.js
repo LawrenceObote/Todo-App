@@ -1,28 +1,21 @@
 const getTodos = async () => {
-  const url = `https://expressjs-postgres-production-cdbe.up.railway.app/`;
+  const url = `http://localhost:3001/todo_list`;
 
   const response = await fetch(url, {
     method: "GET",
-    mode: "no-cors",
-  });
-
-  const todos = await response.json();
-  appState = todos.data;
-  return todos.data;
+  })
+    .then((response) => response.json())
+    .then((response) => {
+      clearTodos();
+      renderTodosUl(response.data);
+      return response.data;
+    });
 };
 
-const createTodoItem = async (text) => {
-  const url = `https://expressjs-postgres-production-cdbe.up.railway.app/`;
-  console.log(url);
+const createTodoItem = async (title) => {
+  const url = `http://localhost:3001/?title=${title}`;
   const response = await fetch(url, {
     method: "POST",
-    mode: "cors",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      title: text,
-    }),
   });
 
   if (!response.ok) {
@@ -32,7 +25,7 @@ const createTodoItem = async (text) => {
 };
 
 const deleteTodo = async (id) => {
-  const url = `https://expressjs-postgres-production-cdbe.up.railway.app/todo_list/?id=${id}`;
+  const url = `https://todo-list-wde5.onrender.com?id=${id}`;
 
   const response = await fetch(url, {
     method: "DELETE",
@@ -43,11 +36,10 @@ const deleteTodo = async (id) => {
 };
 
 const upsertTodo = async (id, title) => {
-  const url = `https://expressjs-postgres-production-cdbe.up.railway.app/todo_list/`;
+  const url = `https://todo-list-wde5.onrender.com/`;
   console.log("here is the title", title);
   const response = await fetch(url, {
     method: "PUT",
-    mode: "cors",
     headers: {
       "Content-Type": "application/json",
     },
@@ -62,7 +54,7 @@ const upsertTodo = async (id, title) => {
 };
 
 const setCompleted = async (todo) => {
-  const url = `https://expressjs-postgres-production-cdbe.up.railway.app/todo_list/`;
+  const url = `https://todo-list-wde5.onrender.com`;
 
   const response = await fetch(url, {
     method: "PUT",
@@ -80,7 +72,7 @@ const setCompleted = async (todo) => {
 };
 
 const editTodos = async (id, title) => {
-  const url = `https://expressjs-postgres-production-cdbe.up.railway.app/todo_list/`;
+  const url = `https://todo-list-wde5.onrender.com/`;
   let headers;
 
   if (title) {
@@ -252,11 +244,9 @@ const decodeHTMLEntities = (text) => {
   return textArea.value;
 };
 
-const renderTodosUl = async () => {
+const renderTodosUl = async (todoList) => {
   let list = document.getElementById("todoList");
-  let todoList = await getTodos();
-
-  const todoListHtml = todoList.map((todo) => {
+  todoListHtml = todoList.map((todo) => {
     let li = document.createElement("li");
 
     let body = document.getElementById("body");
@@ -294,7 +284,7 @@ const renderTodosUl = async () => {
     };
   });
 
-  list.innerHTML.value = todoListHtml;
+  list.innerHTML.value = todoList;
 };
 
 const clearTodos = () => {
@@ -304,18 +294,22 @@ const clearTodos = () => {
 };
 
 const refreshTodoList = async () => {
-  await clearTodos();
+  clearTodos();
   renderTodosUl();
 };
 
-const form = document.getElementById("createForm");
-form.addEventListener("submit", async (e) => {
+// const form = document.getElementById("createButton");
+// form.addEventListener("submit", (e) => {
+//   e.preventDefault();
+//   const title = document.getElementById("createInput").value;
+//   console.log("---->", title);
+//   createTodoItem(title);
+//   refreshTodoList();
+// });
+
+document.getElementById("createForm").onsubmit = (e) => {
   e.preventDefault();
   const title = document.getElementById("createInput").value;
-  console.log(title);
-  await createTodoItem(title);
-  refreshTodoList();
-  console.log(appState);
-});
-
-renderTodosUl();
+  console.log("timefortitle", title);
+  createTodoItem(title);
+};
