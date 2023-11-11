@@ -24,12 +24,16 @@ const createTodoItem = async (title) => {
   console.log(response);
 };
 
-const deleteTodo = async (id) => {
-  const url = `https://todo-list-wde5.onrender.com?id=${id}`;
+const deleteTodo = async (id, li) => {
+  const url = `http://localhost:3001/?id=${id}`;
 
   const response = await fetch(url, {
     method: "DELETE",
+    body: JSON.stringify({
+      id: id,
+    }),
   });
+  li.remove();
   if (!response.ok) {
     throw new Error(`HTTP error: status: ${response.status}`);
   }
@@ -113,9 +117,6 @@ const createDeleteButton = (todo) => {
   deleteButton.innerText = decodeHTMLEntities("&#10008;");
   deleteButton.classList.add("deleteButton");
   deleteButtonDiv.appendChild(deleteButton);
-  deleteButton.addEventListener("click", (e) => {
-    deleteTodo(todo.id);
-  });
 
   return deleteButtonDiv;
 };
@@ -269,11 +270,11 @@ const renderTodosUl = async (todoList) => {
     li.appendChild(createTodoTextDiv(todo));
     const editArray = createEditFunctionality(todo);
     li.appendChild(editArray[0]);
-    li.appendChild(createDeleteButton(todo), li).firstChild.addEventListener(
+    li.appendChild(createDeleteButton(todo)).firstChild.addEventListener(
       "click",
       (e) => {
-        deleteTodo(todo.id);
-        li.remove();
+        e.preventDefault();
+        deleteTodo(todo.id, li);
       }
     );
     body.appendChild(editArray[1]);
@@ -307,9 +308,12 @@ const refreshTodoList = async () => {
 //   refreshTodoList();
 // });
 
-document.getElementById("createForm").onsubmit = (e) => {
+document.getElementById("createForm").onsubmit = async (e) => {
   e.preventDefault();
   const title = document.getElementById("createInput").value;
   console.log("timefortitle", title);
-  createTodoItem(title);
+  await createTodoItem(title);
+  getTodos();
 };
+
+getTodos();

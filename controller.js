@@ -80,12 +80,12 @@ const upsertTodos = async (id, title) => {
 };
 
 const deleteTodo = async (req, res) => {
-  const id = req.query.id;
-
+  const id = req.body.id;
+  console.log(req);
   const query = SQL`DELETE FROM todo WHERE ID = ${id};`;
   try {
     const data = await pool.query(query);
-    // if (data.rowCount == 0) return res.status(404).send("todo does not exist");
+    if (data.rowCount == 0) return res.status(404).send("todo does not exist");
 
     return res.status(200).json({
       status: 200,

@@ -6,7 +6,7 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const router = require("./route");
 const path = require("path");
-const { editTodo, createTodo, getTodos } = require("./controller");
+const { editTodo, createTodo, getTodos, deleteTodo } = require("./controller");
 const dotenv = require("dotenv");
 dotenv.config();
 const port = process.env.PORT || 3001;
@@ -32,6 +32,7 @@ pool.on("connect", () => {
 app.use(express.static(path.join(__dirname, "public")));
 
 // app.use("/", router);
+// app.use(cors());
 app.get("/todo_list", async (req, res) => {
   getTodos(req, res, pool);
 });
@@ -39,7 +40,7 @@ app.post("/", (req, res) => {
   createTodo(req, res);
 });
 app.delete("/", (req, res) => {
-  console.log("Delete request called", req);
+  deleteTodo(req, res);
 });
 app.put("/", editTodo);
 
