@@ -26,7 +26,6 @@ pool.connect(function (err) {
 
 pool.on("connect", () => {
   console.log("connected to the db");
-  console.log(path.join(__dirname, "public"));
 });
 
 app.use(express.static(path.join(__dirname, "public")));

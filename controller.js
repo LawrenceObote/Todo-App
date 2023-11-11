@@ -8,14 +8,13 @@ const createTodo = async (req, res) => {
   const query = SQL`insert into todo (title, created_on, completed) values(${title}, current_timestamp, false);`;
   try {
     const data = await pool.query(query);
-    console.log("working!!!");
     return res.status(201).json({
       status: 201,
       message: "ToDo added successfuly",
       data: data.rows,
     });
   } catch (error) {
-    console.log(error, title);
+    console.log(error);
     return error;
   }
 };
@@ -27,7 +26,6 @@ const getTodos = async (req, res, pool) => {
     );
 
     if (data.rowCount == 0) return res.status(404).send("No Todo exists");
-    console.log(JSON.parse(JSON.stringify(data.rows))[0]);
     return res.status(201).json({
       status: 201,
       message: "All Todos:",
@@ -80,8 +78,8 @@ const upsertTodos = async (id, title) => {
 };
 
 const deleteTodo = async (req, res) => {
-  const id = req.body.id;
-  console.log(req);
+  const id = req.query.id;
+
   const query = SQL`DELETE FROM todo WHERE ID = ${id};`;
   try {
     const data = await pool.query(query);
@@ -115,7 +113,6 @@ const setCompleted = async (id) => {
 };
 
 const editTodo = async (req, res) => {
-  console.log("lets goo", req.body, req.query);
   if (req.body.title) {
     await upsertTodos(req.body.id, req.body.title);
     return;

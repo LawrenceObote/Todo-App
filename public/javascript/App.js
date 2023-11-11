@@ -156,10 +156,9 @@ const createPopupForm = (todo, editButtonDiv) => {
     }
 
     document.addEventListener("click", (e) => {
-      console.log(e.composedPath().includes(editButtonDiv));
       if (e.composedPath().includes(editButtonDiv)) return;
       const isClickedInsideDiv = e.composedPath().includes(popupForm);
-      console.log("clicked", isClickedInsideDiv);
+
       if (!isClickedInsideDiv && popupForm.style.visibility == "visible") {
         popupForm.style.visibility = "hidden";
       }
@@ -298,15 +297,6 @@ const refreshTodoList = async () => {
   clearTodos();
   renderTodosUl();
 };
-
-// const form = document.getElementById("createButton");
-// form.addEventListener("submit", (e) => {
-//   e.preventDefault();
-//   const title = document.getElementById("createInput").value;
-//   console.log("---->", title);
-//   createTodoItem(title);
-//   refreshTodoList();
-// });
 
 document.getElementById("createForm").onsubmit = async (e) => {
   e.preventDefault();
