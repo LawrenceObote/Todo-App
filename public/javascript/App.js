@@ -1,5 +1,5 @@
 const getTodos = async () => {
-  const url = `http://localhost:3001/todo_list`;
+  const url = `https://todo-list-wde5.onrender.com/todo_list`;
 
   const response = await fetch(url, {
     method: "GET",
@@ -13,7 +13,7 @@ const getTodos = async () => {
 };
 
 const createTodoItem = async (title) => {
-  const url = `http://localhost:3001/?title=${title}`;
+  const url = `https://todo-list-wde5.onrender.com/?title=${title}`;
   const response = await fetch(url, {
     method: "POST",
   });
@@ -25,7 +25,7 @@ const createTodoItem = async (title) => {
 };
 
 const deleteTodo = async (id, li) => {
-  const url = `http://localhost:3001/?id=${id}`;
+  const url = `https://todo-list-wde5.onrender.com/?id=${id}`;
 
   const response = await fetch(url, {
     method: "DELETE",
@@ -40,7 +40,7 @@ const deleteTodo = async (id, li) => {
 };
 
 // const upsertTodo = async (id, title) => {
-//   const url = `http://localhost:3001/`;
+//   const url = `https://todo-list-wde5.onrender.com/`;
 //   console.log("here is the title", title);
 //   const response = await fetch(url, {
 //     method: "PUT",
@@ -80,7 +80,7 @@ const editTodos = async (id, title) => {
   let url;
 
   if (title) {
-    url = `http://localhost:3001/?id=${id}&title=${title}`;
+    url = `https://todo-list-wde5.onrender.com/?id=${id}&title=${title}`;
     headers = {
       method: "PUT",
       body: JSON.stringify({
@@ -89,7 +89,7 @@ const editTodos = async (id, title) => {
       }),
     };
   } else {
-    url = `http://localhost:3001/?id=${id}`;
+    url = `https://todo-list-wde5.onrender.com/?id=${id}`;
     headers = {
       method: "PUT",
       body: JSON.stringify({
