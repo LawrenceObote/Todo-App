@@ -4,10 +4,10 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const createTodo = async (req, res) => {
-  const title = req.query.title;
-  const query = SQL`insert into todo (title, created_on, completed) values(${title}, current_timestamp, false);`;
+  const text = "INSERT INTO todo (title) VALUES($1);";
+  const values = [req.query.title];
   try {
-    const data = await pool.query(query);
+    const data = await pool.query(text, values);
     return res.status(201).json({
       status: 201,
       message: "ToDo added successfuly",
@@ -36,34 +36,14 @@ const getTodos = async (req, res, pool) => {
     return error;
   }
 };
-const getTodoById = async (req, res) => {
-  const id = parseInt(req.params.id);
-  const query = "SELECT * FROM todo WHERE id=$1";
-  const value = [id];
-
-  try {
-    const data = await pool.query;
-
-    if (data.rowCount == 0) return res.status(404).send("No article exists");
-
-    return res.status(200).json({
-      status: 200,
-      message: "Todo",
-      data: data.rows,
-    });
-  } catch (error) {
-    return error;
-  }
-};
 
 const upsertTodos = async (id, title) => {
-  const query = SQL`INSERT INTO todo (id, title)
-    VALUES (${id}, ${title})
-    ON CONFLICT (id)
-    DO UPDATE SET title = EXCLUDED.title;`;
+  const text =
+    "INSERT INTO todo (id, title) VALUES ($1, $2) ON CONFLICT (id) DO UPDATE SET title = EXCLUDED.title;";
+  const values = [id, title];
 
   try {
-    const data = await pool.query(query);
+    const data = await pool.query(text, values);
 
     if (data.rowCount == 0) return res.status(204).send("Todo does not exist");
 
@@ -78,11 +58,11 @@ const upsertTodos = async (id, title) => {
 };
 
 const deleteTodo = async (req, res) => {
-  const id = req.query.id;
-
-  const query = SQL`DELETE FROM todo WHERE ID = ${id};`;
+  console.log(req.query, req.body);
+  const text = "DELETE FROM todo WHERE id = $1;";
+  const values = [req.query.id];
   try {
-    const data = await pool.query(query);
+    const data = await pool.query(text, values);
     if (data.rowCount == 0) return res.status(404).send("todo does not exist");
 
     return res.status(200).json({
@@ -95,10 +75,10 @@ const deleteTodo = async (req, res) => {
 };
 
 const setCompleted = async (id) => {
-  const query = SQL`UPDATE todo SET completed = NOT completed WHERE ID = ${id}`;
-
+  const text = "UPDATE todo SET completed = NOT completed WHERE ID = $1;";
+  const values = [id];
   try {
-    const data = await pool.query(query);
+    const data = await pool.query(text, values);
 
     if (data.rowCount == 0) return res.status(404).send("Todo does not exist");
 
@@ -123,7 +103,6 @@ const editTodo = async (req, res) => {
 
 module.exports = {
   createTodo,
-  getTodoById,
   getTodos,
   deleteTodo,
   editTodo,

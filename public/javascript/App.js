@@ -1,5 +1,5 @@
 const getTodos = async () => {
-  const url = `https://todo-list-wde5.onrender.com/todo_list`;
+  const url = `http://localhost:3001/todo_list`;
 
   const response = await fetch(url, {
     method: "GET",
@@ -13,7 +13,7 @@ const getTodos = async () => {
 };
 
 const createTodoItem = async (title) => {
-  const url = `https://todo-list-wde5.onrender.com/?title=${title}`;
+  const url = `http://localhost:3001/?title=${title}`;
   const response = await fetch(url, {
     method: "POST",
   });
@@ -25,22 +25,26 @@ const createTodoItem = async (title) => {
 };
 
 const deleteTodo = async (id, li) => {
-  const url = `https://todo-list-wde5.onrender.com/?id=${id}`;
-
-  const response = await fetch(url, {
-    method: "DELETE",
-    body: JSON.stringify({
-      id: id,
-    }),
-  });
-  li.remove();
-  if (!response.ok) {
-    throw new Error(`HTTP error: status: ${response.status}`);
+  const url = `http://localhost:3001/?id=${id}`;
+  try {
+    const response = await fetch(url, {
+      method: "DELETE",
+      body: JSON.stringify({
+        id: id,
+      }),
+    });
+    li.remove();
+  } catch (error) {
+    console.log(error);
+    throw new error();
   }
+  // if (!response.ok) {
+  //   throw new Error(`HTTP error: status: ${response.status}`);
+  // }
 };
 
 // const upsertTodo = async (id, title) => {
-//   const url = `https://todo-list-wde5.onrender.com/`;
+//   const url = `http://localhost:3001/`;
 //   console.log("here is the title", title);
 //   const response = await fetch(url, {
 //     method: "PUT",
@@ -58,7 +62,7 @@ const deleteTodo = async (id, li) => {
 // };
 
 const setCompleted = async (todo) => {
-  const url = `https://todo-list-wde5.onrender.com`;
+  const url = `http://localhost:3001`;
 
   const response = await fetch(url, {
     method: "PUT",
@@ -80,7 +84,7 @@ const editTodos = async (id, title) => {
   let url;
 
   if (title) {
-    url = `https://todo-list-wde5.onrender.com/?id=${id}&title=${title}`;
+    url = `http://localhost:3001/?id=${id}&title=${title}`;
     headers = {
       method: "PUT",
       body: JSON.stringify({
@@ -89,7 +93,7 @@ const editTodos = async (id, title) => {
       }),
     };
   } else {
-    url = `https://todo-list-wde5.onrender.com/?id=${id}`;
+    url = `http://localhost:3001/?id=${id}`;
     headers = {
       method: "PUT",
       body: JSON.stringify({
