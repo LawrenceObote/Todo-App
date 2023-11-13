@@ -1,8 +1,14 @@
-#[Todo List Application](todo.lawrenceobote.com)
+# [Todo List Application](todo.lawrenceobote.com)
+
+## Description
 
 This is a simple CRUD Aplication using Express and PostgreSQL. Go to [todo.lawrenceobote.com](todo.lawrenceobote.com) use the list.
 
+## Directions
+
 To run the application locally first clone the repository. Navigate to the root directory and run "npm install". After the install run "node app.js".
+
+## Coming soon
 
 In Progress:
 *Polish UI for a more presentable user experience
