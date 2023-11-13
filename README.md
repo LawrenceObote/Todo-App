@@ -1,8 +1,8 @@
-# [Todo List Application](https://todo.lawrenceobote.com/)
+# [Todo List Application](<https://todo.lawrenceobote.com/>)
 
 ## Description
 
-This is a simple CRUD Aplication using Express and PostgreSQL. Go to [todo.lawrenceobote.com](https://todo.lawrenceobote.com/) use the list.
+This is a simple CRUD Aplication using Express and PostgreSQL. Go to [todo.lawrenceobote.com](<https://todo.lawrenceobote.com/>) use the list.
 
 ## Directions
 
