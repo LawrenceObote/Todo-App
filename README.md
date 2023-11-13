@@ -11,5 +11,6 @@ To run the application locally first clone the repository. Navigate to the root 
 ## Coming soon
 
 In Progress:
-*Polish UI for a more presentable user experience
-*Add the "todo completed" frontend functionality
+*Polish UI for a more presentable user experience\
+*Add the "todo completed" frontend functionality\
+*optimize for mobile\
