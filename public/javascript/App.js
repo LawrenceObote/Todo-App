@@ -8,7 +8,10 @@ const fetchAPI = async (url, options) => {
 
 const getTodos = async () => {
   try {
-    const todos = await fetchAPI(API_URL, { method: "GET" });
+    const todos = await fetchAPI(
+      "https://todo-list-wde5.onrender.com/todo_list",
+      { method: "GET" }
+    );
     clearTodos();
     renderTodosUl(todos.data);
     return todos.data;
