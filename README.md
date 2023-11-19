@@ -1,15 +1,16 @@
-# README
+# [Todo List Application](<https://todo.lawrenceobote.com/>)
 
-This is the [Express](https://expressjs.com) [Hello world](https://expressjs.com/en/starter/hello-world.html) example on [Render](https://render.com).
+## Description
 
-The app in this repo is deployed at [https://express.onrender.com](https://express.onrender.com).
+This is a simple CRUD Aplication using Express and PostgreSQL. Go to [todo.lawrenceobote.com](<https://todo.lawrenceobote.com/>) use the list.
 
-## Deployment
+## Directions
 
-See https://render.com/docs/deploy-node-express-app or follow the steps below:
+To run the application locally first clone the repository. Navigate to the root directory and run "npm install". After the install run "node app.js".
 
-Create a new web service with the following values:
-  * Build Command: `yarn`
-  * Start Command: `node app.js`
+## Coming soon
 
-That's it! Your web service will be live on your Render URL as soon as the build finishes.
+In Progress:
+*Polish UI for a more presentable user experience\
+*Add the "todo completed" frontend functionality\
+*optimize for mobile\
