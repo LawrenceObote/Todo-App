@@ -19,10 +19,11 @@ const createTodo = async (req, res) => {
   }
 };
 
-const getTodos = async (req, res, pool) => {
+const getTodos = async (req, res) => {
   try {
     const data = await pool.query(
-      "SELECT * FROM todo ORDER BY created_on DESC;"
+      "SELECT * FROM todo ORDER BY created_on DESC;",
+      []
     );
 
     if (data.rowCount == 0) return res.status(404).send("No Todo exists");

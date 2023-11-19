@@ -12,8 +12,8 @@ const getTodos = async () => {
       "https://todo-list-wde5.onrender.com/todo_list",
       { method: "GET" }
     );
-    clearTodos();
-    renderTodosUl(todos.data);
+    await clearTodos();
+    await renderTodosUl(todos.data);
     return todos.data;
   } catch (error) {
     console.error(error);
