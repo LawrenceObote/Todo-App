@@ -1,99 +1,77 @@
-const getTodos = async () => {
-  const url = `https://todo-list-wde5.onrender.com/todo_list`;
+const fetchAPI = async (url, options) => {
+  const response = await fetch(url, options);
+  if (!response.ok) {
+    throw new Error(`HTTP error: status: ${response.status}`);
+  }
+  return response.json();
+};
 
-  const response = await fetch(url, {
-    method: "GET",
-  })
-    .then((response) => response.json())
-    .then((response) => {
-      clearTodos();
-      renderTodosUl(response.data);
-      return response.data;
-    });
+const getTodos = async () => {
+  try {
+    const todos = await fetchAPI(API_URL, { method: "GET" });
+    clearTodos();
+    renderTodosUl(todos.data);
+    return todos.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
 };
 
 const createTodoItem = async (title) => {
   const url = `https://todo-list-wde5.onrender.com/?title=${title}`;
-  const response = await fetch(url, {
-    method: "POST",
-  });
-
-  if (!response.ok) {
-    throw new Error(`HTTP error: status: ${response.status}`);
-  }
-  console.log(response);
+  await fetchAPI(url, { method: "POST" });
 };
 
 const deleteTodo = async (id, li) => {
   const url = `https://todo-list-wde5.onrender.com/?id=${id}`;
   try {
-    const response = await fetch(url, {
+    await fetchAPI(url, {
       method: "DELETE",
-      body: JSON.stringify({
-        id: id,
-      }),
+      body: JSON.stringify({ id }),
     });
     li.remove();
   } catch (error) {
-    console.log(error);
-    throw new error();
+    console.error(error);
+    throw error;
   }
 };
 
 const setCompleted = async (todo) => {
   const url = `http://localhost:3001`;
 
-  const response = await fetch(url, {
+  await fetchAPI(url, {
     method: "PUT",
     mode: "cors",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({
-      id: todo.id,
-    }),
+    body: JSON.stringify({ id: todo.id }),
   });
-  if (!response.ok) {
-    throw new Error(`HTTP error: status: ${response.status}`);
-  }
 };
 
 const editTodos = async (id, title) => {
-  let headers;
-  let url;
-
-  if (title) {
-    url = `https://todo-list-wde5.onrender.com/?id=${id}&title=${title}`;
-    headers = {
-      method: "PUT",
-      body: JSON.stringify({
-        id: id,
-        title: title,
-      }),
-    };
-  } else {
-    url = `https://todo-list-wde5.onrender.com/?id=${id}`;
-    headers = {
-      method: "PUT",
-      body: JSON.stringify({
-        id: id,
-      }),
-    };
-  }
-
-  const response = await fetch(url, headers);
-  if (!response.ok) {
-    throw new Error(`HTTP error: status: ${response.status}`);
-  }
+  const url = `https://todo-list-wde5.onrender.com/?id=${id}${
+    title ? `&title=${title}` : ""
+  }`;
+  await fetchAPI(url, {
+    method: "PUT",
+    body: JSON.stringify({ id, title }),
+  });
 };
 
 const createDeleteButton = (todo) => {
-  let deleteButtonDiv = document.createElement("div");
+  const deleteButtonDiv = document.createElement("div");
   deleteButtonDiv.classList.add("deleteButtonDiv");
-  let deleteButton = document.createElement("button");
+  const deleteButton = document.createElement("button");
   deleteButton.innerText = decodeHTMLEntities("&#10008;");
   deleteButton.classList.add("deleteButton");
   deleteButtonDiv.appendChild(deleteButton);
+
+  deleteButton.addEventListener("click", (e) => {
+    e.preventDefault();
+    deleteTodo(todo.id, deleteButtonDiv.parentElement);
+  });
 
   return deleteButtonDiv;
 };
@@ -246,13 +224,7 @@ const renderTodosUl = async (todoList) => {
     li.appendChild(createTodoTextDiv(todo));
     const editArray = createEditFunctionality(todo);
     li.appendChild(editArray[0]);
-    li.appendChild(createDeleteButton(todo)).firstChild.addEventListener(
-      "click",
-      (e) => {
-        e.preventDefault();
-        deleteTodo(todo.id, li);
-      }
-    );
+    li.appendChild(createDeleteButton(todo));
     body.appendChild(editArray[1]);
     list.appendChild(li);
 
@@ -277,10 +249,13 @@ const refreshTodoList = async () => {
 
 document.getElementById("createForm").onsubmit = async (e) => {
   e.preventDefault();
-  const title = document.getElementById("createInput").value;
-  console.log("timefortitle", title);
-  await createTodoItem(title);
-  getTodos();
+  const titleInput = document.getElementById("createInput");
+  const title = titleInput.value.trim();
+  if (title) {
+    await createTodoItem(title);
+    getTodos();
+    titleInput.value = "";
+  }
 };
 
 getTodos();
