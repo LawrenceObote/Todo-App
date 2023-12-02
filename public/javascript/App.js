@@ -92,7 +92,6 @@ const createPopupForm = (todo, editButtonDiv) => {
   popupInput.setAttribute("class", `popupInput`);
   popupInput.setAttribute("placeholder", "Enter updated todo text here");
   popupInput.classList.add("popupInput");
-  popupInput.style;
   let popupSubmit = document.createElement("submit");
   popupForm.appendChild(popup);
   popup.appendChild(popupInput);
