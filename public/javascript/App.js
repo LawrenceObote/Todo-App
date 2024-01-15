@@ -137,6 +137,7 @@ const createEditFunctionality = (todo) => {
 
   let popupForm = document.createElement("form");
   popupForm.setAttribute("id", `popupForm${todo.id}`);
+  popupForm.setAttribute("onsubmit", `return false`);
   popupForm.classList.add("popupContainer");
   let popup = document.createElement("div");
   popup.classList.add("popup");
