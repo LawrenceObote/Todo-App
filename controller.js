@@ -27,8 +27,8 @@ const getTodos = async (req, res) => {
     );
 
     if (data.rowCount == 0) return res.status(404).send("No Todo exists");
-    return res.status(201).json({
-      status: 201,
+    return res.status(200).json({
+      status: 200,
       message: "All Todos:",
       data: data.rows,
     });
@@ -48,8 +48,8 @@ const upsertTodos = async (id, title) => {
 
     if (data.rowCount == 0) return res.status(204).send("Todo does not exist");
 
-    return res.status(200).json({
-      status: 200, //check for more specific success
+    return res.status(201).json({
+      status: 201,
       message: "Todo updated successfully",
       data: data.rows,
     });
@@ -66,8 +66,8 @@ const deleteTodo = async (req, res) => {
     const data = await pool.query(text, values);
     if (data.rowCount == 0) return res.status(404).send("todo does not exist");
 
-    return res.status(200).json({
-      status: 200,
+    return res.status(201).json({
+      status: 201,
       message: "Todo deleted succesfully",
     });
   } catch (error) {
@@ -83,8 +83,8 @@ const setCompleted = async (id) => {
 
     if (data.rowCount == 0) return res.status(404).send("Todo does not exist");
 
-    return res.status(200).json({
-      status: 200,
+    return res.status(201).json({
+      status: 201,
       message: "Completed status updated successfully",
       data: data.rows,
     });

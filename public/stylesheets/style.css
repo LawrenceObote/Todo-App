@@ -40,7 +40,6 @@ body {
   padding-bottom: 10px;
   color: hsl(234, 39%, 85%);
   text-align: center;
-  /* max-width: 540px; */
 }
 
 .createTodoDiv {
@@ -164,9 +163,6 @@ li {
   text-align: center;
 }
 
-.popupInput {
-}
-
 .hide {
   visibility: hidden;
 }
@@ -285,9 +281,6 @@ li {
   width: 80%;
   padding-left: 10px;
   bottom: 20%;
-}
-
-.todoText {
 }
 
 .close:checked {
