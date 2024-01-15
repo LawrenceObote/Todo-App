@@ -155,7 +155,8 @@ const createEditFunctionality = (todo) => {
   popup.style.visibility = "hidden";
   popupForm.style.visibility = "hidden";
   popupForm.addEventListener("submit", (e) => {
-    const title = popupInput.value; //CHECK THIS!!!
+    const title = popupInput.value;
+    e.preventDefault;
     editTodos(todo.id, title);
   });
   editPencil.addEventListener("click", (e) => {
